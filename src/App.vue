@@ -1,28 +1,174 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container-fluid">
+    <SideBar></SideBar>
+    <Container :setData="textItem"></Container>
+    <NewItem @reData="textItem.push($event)"></NewItem>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import SideBar from "./components/SideBar.vue";
+import Container from "./components/Container.vue";
+import NewItem from "./components/NewItem.vue";
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    SideBar,
+    Container,
+    NewItem,
+  },
+  data() {
+    return {
+      textItem: [],
+    };
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  /* Importing a font from google fonts. */
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap");
+  font-family: "Open Sans", sans-serif;
+  /* Setting the background image to the body of the page. */
+  background: url(./assets/milad-fakurian-PGdW_bHDbpI-unsplash.jpg);
+  background-position: center center;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  /* Centering the content of the page. */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-fluid {
+  height: 100%;
+  widows: 100%;
+  position: relative;
+}
+.container {
+  display: flex;
+  position: relative;
+  width: 90%;
+  min-height: 100vh !important;
+  border-radius: 30px;
+
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+.card {
+  background: rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(.5rem);
+
+  border: none;
+  border-top: 3px solid rgba(255, 255, 255, 0.336);
+  border-right: 1px solid rgba(255, 255, 255, 0.364);
+  border-radius: 30px;
+
+  height: 450px;
+  width: 350px;
+
+  margin: 1.3rem;
+  padding: 1rem;
+
+  color: white;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 15%;
+  border-radius: 10px;
+  border-top: 3px solid #ffffff;
+  border-right: 2px solid #ffff;
+  border-bottom:1px solid rgba(255, 255, 255, 0.364) ;
+  border-left:1px solid rgba(255, 255, 255, 0.364) ;
+ 
+  z-index: 1000;
+}
+
+.bi-github,
+.bi-linkedin,
+.bi-alarm,
+.bi-window {
+  transition: 0.5s ease-in-out;
+  font-size: 30px;
+  color: #7524ab83;
+
+  text-shadow: 0mm 0mm 1mm rgba(11, 6, 6, 0.478);
+  margin: 20px;
+  cursor: pointer;
+}
+
+.bi-github:hover,
+.bi-linkedin:hover,
+.bi-alarm:hover,
+.bi-window:hover {
+  backdrop-filter: blur(1rem);
+  transition: 0.3s ease-in-out;
+  color: #ffffff;
+}
+
+.write {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background: rgba(255, 255, 255, 0.089);
+  width: 5rem;
+  height: 5rem;
+  bottom: 3.5%;
+  right: 4.4%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  box-shadow: 0mm 0mm 1mm white;
+}
+.write i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 5rem;
+  height: 5rem;
+  color: white;
+}
+.write:hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0mm 0mm 1mm rgb(114, 192, 219);
+}
+
+.bi-pen {
+  font-size: 26px;
+}
+.bi-pen:hover {
+  transition: 0.3s ease-in-out;
+  color: rgb(114, 192, 219);
+}
+
+.text-area {
+  position: fixed;
+  top: 8%;
+  right: 0;
+  width: 400px;
+  height: 500px;
+
+  /* background: rgba(136, 136, 136, 0.093);
+  box-shadow: 0mm 0mm 1mm white; */
+}
+
+.area {
+  height: 450px;
+  width: 350px;
+  margin: 1.3rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.093);
+  backdrop-filter: blur(0.5rem);
+  box-shadow: 0mm 0mm 1mm rgba(255, 255, 255, 0.52);
+  border: none;
+  border-radius: 30px;
+  outline: none;
 }
 </style>
