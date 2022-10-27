@@ -15,6 +15,17 @@
           placeholder="What are you think..?"
           v-model="textInput"
         ></textarea>
+        <div class="opt">
+          <select class="min" v-model="minute">
+            <option value="">Min</option>
+
+            <option v-for="i in number" :key="i" clas>{{ i }}</option>
+          </select>
+          <select class="sec" v-model="second">
+            <option value="">Sec</option>
+            <option v-for="i in number" :key="i">{{ i }}</option>
+          </select>
+        </div>
         <button class="run" @click="setText">Go</button>
       </div>
     </div>
@@ -31,23 +42,31 @@ export default {
   data() {
     return {
       isBoard: false,
+      timer: false,
+      number: [],
       textInput: "",
       text: "",
       title: "",
+      second: 0,
+      minute: 0,
+      hour: 0,
     };
   },
   methods: {
     changeBoard() {
       this.isBoard = !this.isBoard;
+      for (let i = 0; i <= 60; i++) {
+        this.number.push(i);
+      }
     },
 
     setText() {
       let date = new Date();
       let day = date.getDate();
-      let month = date.getMonth()+1;
+      let month = date.getMonth() + 1;
       let year = date.getFullYear();
 
-      console.log(day,month,year)
+      console.log(day, month, year);
 
       let randomNumber = "azFazQwwg" + Math.floor(Math.random() * 100 + "eQ5");
       this.$emit("reData", {
@@ -56,6 +75,15 @@ export default {
         date: { day, month, year },
         text: this.textInput,
         isCompleted: false,
+        second: 0,
+        timerS: this.second,
+        minute: 0,
+        timerM: this.minute,
+        hour: 0,
+        timerH: 0,
+        cardActive: false,
+
+        cardComplete: false,
       });
 
       this.textInput = "";
@@ -113,5 +141,21 @@ export default {
   box-shadow: 0mm 0mm 1mm white;
   border: none;
   border-radius: 10px;
+}
+
+.opt {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 10%;
+  right: 95%;
+}
+select {
+  background: rgba(128, 0, 128, 0.084);
+  backdrop-filter: blur(1rem);
+  border: none;
+  border-top: 1px solid white;
+  margin-bottom: 5px;
+  border-radius: 5px;
 }
 </style>

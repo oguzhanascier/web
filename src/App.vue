@@ -62,8 +62,8 @@ body {
   backdrop-filter: blur(.5rem);
 
   border: none;
-  border-top: 3px solid rgba(255, 255, 255, 0.336);
-  border-right: 1px solid rgba(255, 255, 255, 0.364);
+  border-top: 3px solid rgba(255, 255, 255, 0.936);
+  border-right: 1px solid rgba(255, 255, 255, 0.664);
   border-radius: 30px;
 
   height: 450px;
@@ -91,7 +91,6 @@ body {
 
 .bi-github,
 .bi-linkedin,
-.bi-alarm,
 .bi-window {
   transition: 0.5s ease-in-out;
   font-size: 30px;
@@ -104,7 +103,6 @@ body {
 
 .bi-github:hover,
 .bi-linkedin:hover,
-.bi-alarm:hover,
 .bi-window:hover {
   backdrop-filter: blur(1rem);
   transition: 0.3s ease-in-out;
@@ -153,14 +151,14 @@ body {
   top: 8%;
   right: 0;
   width: 400px;
-  height: 500px;
+  height: 400px;
 
   /* background: rgba(136, 136, 136, 0.093);
   box-shadow: 0mm 0mm 1mm white; */
 }
 
 .area {
-  height: 450px;
+  height: 400px;
   width: 350px;
   margin: 1.3rem;
   padding: 1rem;
