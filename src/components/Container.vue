@@ -1,14 +1,24 @@
 <template>
+   <div>
+    <SideBar></SideBar>
   <div class="container">
+
     <div class="row d-flex justify-content-around">
       <div
         class="col-lg-4 col-md-6 col-sm-12"
         v-for="(item, index) in setData"
         :key="index"
       >
+
+
         <div class="card" :class="{ cardComplete: item.cardComplete }">
           <div class="card-body scrollText">
+            <span class="trashSpan"
+              ><i class="fa-solid fa-trash" @click="deleteItem(index)"></i
+            ></span>
+
             <h5 class="card-title">{{ item.title }}</h5>
+
             <h6 class="card-subtitle mb-2 text-muted">
               {{ item.date.day }}.{{ item.date.month }}.{{ item.date.year }}
             </h6>
@@ -17,10 +27,14 @@
             </p>
           </div>
 
-          <div class="timer" :class="{ completeTimer: item.cardActive }">
+          <div
+            class="timer"
+            :class="{ completeTimer: item.cardActive }"
+            v-if="(!item.timerM == 0) | (!item.timerS == 0)"
+          >
             <i
               class="bi bi-alarm"
-              @click="timerStart(item)"
+              @click="timerStart(item, index)"
               v-show="!item.cardActive"
             ></i>
 
@@ -34,39 +48,54 @@
 
             <span v-if="item.second < 10">0{{ item.second }}</span>
             <span v-else>{{ item.second }}</span>
+            <span
+              class="stopWatch ms-2 text"
+              @click="stopWatch(item)"
+              v-show="item.cardActive"
+              ><i class="fa-solid fa-pause"></i
+            ></span>
           </div>
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-6" v-for="i in completeItem" :key="i">
+        <p>{{i.text}}</p>
+      </div>
+    </div>
   </div>
+   </div>
 </template>
 
 <script>
-import { setTransitionHooks } from "@vue/runtime-core";
 import NewItem from "./NewItem.vue";
+import SideBar from "./SideBar.vue";
 export default {
   props: ["setData"],
   components: {
     NewItem,
+    SideBar
   },
   data() {
     return {
       clock: null,
       second: 3,
       minute: 0,
+      interval: null,
+      completeItem: [],
+      inputRange: 0,
     };
   },
   methods: {
-    timerStart(item) {
-      console.log(item.second);
+    timerStart(item, index) {
+   
 
-
-      item.cardActive = true //clock icon open/close
+      item.cardActive = true; //clock icon open/close
 
       if (item.cardActive === true) {
         let time = item;
 
-        let interval=setInterval(() => {
+        this.interval = setInterval(() => {
           time.second++;
           if (time.second >= 60) {
             time.minute += 1;
@@ -79,9 +108,10 @@ export default {
           if (time.second == time.timerS && time.minute == time.timerM) {
             alert(item.title);
             item.cardActive = false;
-            item.cardComplete=true
-          clearInterval(interval)
+            item.cardComplete = true;
+            clearInterval(this.interval);
 
+          
           }
         }, 1000);
       }
@@ -104,6 +134,13 @@ export default {
       //   item.hour = timhou;
       // }, 1000);
     },
+    stopWatch(item) {
+      item.cardActive = false;
+      clearInterval(this.interval);
+    },
+    deleteItem(index) {
+      this.setData.splice(index, 1);
+    },
   },
   watch: {
     timerStart(value) {
@@ -117,6 +154,27 @@ export default {
 .card-title {
   font-weight: 700;
   margin-bottom: 20px;
+}
+
+.trashSpan {
+  position: absolute;
+  top: 4%;
+  right: 6%;
+  border-top: 1px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fa-trash {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(128, 0, 128, 0.341);
+  color: rgb(255, 255, 255);
+
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
 }
 .timer {
   display: flex;
@@ -195,10 +253,23 @@ export default {
 }
 
 .completeTimer {
-  color: red;
+  color: rgba(128, 0, 128, 0.529);
 }
 
 .active {
   display: none;
+}
+
+.stopWatch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  background: rgba(128, 0, 128, 0.529);
+  color: rgba(255, 255, 255, 0.985);
+  cursor: pointer;
 }
 </style>

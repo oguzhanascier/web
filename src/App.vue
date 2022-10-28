@@ -1,6 +1,5 @@
 <template>
   <div class="container-fluid">
-    <SideBar></SideBar>
     <Container :setData="textItem"></Container>
     <NewItem @reData="textItem.push($event)"></NewItem>
   </div>
@@ -65,6 +64,8 @@ body {
   border-top: 3px solid rgba(255, 255, 255, 0.936);
   border-right: 1px solid rgba(255, 255, 255, 0.664);
   border-radius: 30px;
+
+  filter: drop-shadow(0mm 0mm 3mm rgba(0, 0, 0, 0.323));
 
   height: 450px;
   width: 350px;

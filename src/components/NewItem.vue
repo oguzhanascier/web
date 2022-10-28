@@ -7,7 +7,8 @@
           type="text"
           class="title"
           v-model="title"
-          placeholder="Keyword.."
+          placeholder="Keyword.. (at least 3 letters)"
+          ref="inputFocus"
         />
 
         <textarea
@@ -26,7 +27,7 @@
             <option v-for="i in number" :key="i">{{ i }}</option>
           </select>
         </div>
-        <button class="run" @click="setText">Go</button>
+        <button class="run" @click="setText" >Go</button>
       </div>
     </div>
 
@@ -55,18 +56,21 @@ export default {
   methods: {
     changeBoard() {
       this.isBoard = !this.isBoard;
-      for (let i = 0; i <= 60; i++) {
+      for (let i = 0; i <= 59; i++) {
         this.number.push(i);
       }
     },
 
     setText() {
-      let date = new Date();
+      
+      if(this.title.split("").length<3){
+        this.$refs.inputFocus.focus()
+      }else{
+        let date = new Date();
       let day = date.getDate();
       let month = date.getMonth() + 1;
       let year = date.getFullYear();
 
-      console.log(day, month, year);
 
       let randomNumber = "azFazQwwg" + Math.floor(Math.random() * 100 + "eQ5");
       this.$emit("reData", {
@@ -86,7 +90,11 @@ export default {
         cardComplete: false,
       });
 
+      }
+
+
       this.textInput = "";
+      this.title=""
     },
 
     close() {
