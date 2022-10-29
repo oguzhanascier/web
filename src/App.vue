@@ -2,6 +2,7 @@
   <div class="container-fluid">
     <Container :setData="textItem"></Container>
     <NewItem @reData="textItem.push($event)"></NewItem>
+
   </div>
 </template>
 
@@ -9,17 +10,23 @@
 import SideBar from "./components/SideBar.vue";
 import Container from "./components/Container.vue";
 import NewItem from "./components/NewItem.vue";
+import Search from "./components/Search.vue";
 export default {
   components: {
     SideBar,
     Container,
     NewItem,
+    Search,
   },
   data() {
     return {
       textItem: [],
+      searchInput:'',
     };
   },
+  methods:{
+
+  }
 };
 </script>
 
@@ -58,7 +65,7 @@ body {
 
 .card {
   background: rgba(0, 0, 0, 0.03);
-  backdrop-filter: blur(.5rem);
+  backdrop-filter: blur(.5rem) ;
 
   border: none;
   border-top: 3px solid rgba(255, 255, 255, 0.936);

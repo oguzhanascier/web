@@ -89,6 +89,8 @@ export default {
 
         cardComplete: false,
       });
+      console.log(this.reData)
+
 
       }
 

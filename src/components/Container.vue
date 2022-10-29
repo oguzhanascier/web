@@ -1,70 +1,76 @@
 <template>
-   <div>
+  <div>
+    <input
+      type="text"
+      v-model="searchInput"
+      class="search"
+      placeholder="Find Keyword..."
+    />
+
     <SideBar></SideBar>
-  <div class="container">
+    <div class="container">
+      <div class="row d-flex justify-content-around">
+        <!-- loop -->
+        <div
+          class="col-lg-4 col-md-6 col-sm-12"
+          v-for="(item, index) in filteredPosts"
+          :key="index"
+        >
+          <!--##############-->
+          <div class="card" :class="{ cardComplete: item.cardComplete }">
+            <div class="card-body scrollText">
+              <span class="trashSpan"
+                ><i class="fa-solid fa-trash" @click="deleteItem(index)"></i
+              ></span>
 
-    <div class="row d-flex justify-content-around">
-      <div
-        class="col-lg-4 col-md-6 col-sm-12"
-        v-for="(item, index) in setData"
-        :key="index"
-      >
+              <h5 class="card-title">{{ item.title }}</h5>
 
+              <h6 class="card-subtitle mb-2 text-muted">
+                {{ item.date.day }}.{{ item.date.month }}.{{ item.date.year }}
+              </h6>
+              <p class="card-text">
+                {{ item.text }}
+              </p>
+            </div>
 
-        <div class="card" :class="{ cardComplete: item.cardComplete }">
-          <div class="card-body scrollText">
-            <span class="trashSpan"
-              ><i class="fa-solid fa-trash" @click="deleteItem(index)"></i
-            ></span>
-
-            <h5 class="card-title">{{ item.title }}</h5>
-
-            <h6 class="card-subtitle mb-2 text-muted">
-              {{ item.date.day }}.{{ item.date.month }}.{{ item.date.year }}
-            </h6>
-            <p class="card-text">
-              {{ item.text }}
-            </p>
-          </div>
-
-          <div
-            class="timer"
-            :class="{ completeTimer: item.cardActive }"
-            v-if="(!item.timerM == 0) | (!item.timerS == 0)"
-          >
-            <i
-              class="bi bi-alarm"
-              @click="timerStart(item, index)"
-              v-show="!item.cardActive"
-            ></i>
-
-            <span style="margin-left: 15px" v-if="item.hour < 10"
-              >0{{ item.hour }}:</span
+            <div
+              class="timer"
+              :class="{ completeTimer: item.cardActive }"
+              v-if="(!item.timerM == 0) | (!item.timerS == 0)"
             >
-            <span style="margin-left: 15px" v-else>{{ item.hour }}:</span>
+              <i
+                class="bi bi-alarm"
+                @click="timerStart(item, index)"
+                v-show="!item.cardActive"
+              ></i>
 
-            <span v-if="item.minute < 10">0{{ item.minute }}:</span>
-            <span v-else>{{ item.minute }}:</span>
+              <span style="margin-left: 15px" v-if="item.hour < 10"
+                >0{{ item.hour }}:</span
+              >
+              <span style="margin-left: 15px" v-else>{{ item.hour }}:</span>
 
-            <span v-if="item.second < 10">0{{ item.second }}</span>
-            <span v-else>{{ item.second }}</span>
-            <span
-              class="stopWatch ms-2 text"
-              @click="stopWatch(item)"
-              v-show="item.cardActive"
-              ><i class="fa-solid fa-pause"></i
-            ></span>
+              <span v-if="item.minute < 10">0{{ item.minute }}:</span>
+              <span v-else>{{ item.minute }}:</span>
+
+              <span v-if="item.second < 10">0{{ item.second }}</span>
+              <span v-else>{{ item.second }}</span>
+              <span
+                class="stopWatch ms-2 text"
+                @click="stopWatch(item)"
+                v-show="item.cardActive"
+                ><i class="fa-solid fa-pause"></i
+              ></span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-6" v-for="i in completeItem" :key="i">
-        <p>{{i.text}}</p>
+      <div class="row">
+        <div class="col-6" v-for="i in completeItem" :key="i">
+          <p>{{ i.text }}</p>
+        </div>
       </div>
     </div>
   </div>
-   </div>
 </template>
 
 <script>
@@ -74,10 +80,11 @@ export default {
   props: ["setData"],
   components: {
     NewItem,
-    SideBar
+    SideBar,
   },
   data() {
     return {
+      searchInput: "",
       clock: null,
       second: 3,
       minute: 0,
@@ -88,8 +95,6 @@ export default {
   },
   methods: {
     timerStart(item, index) {
-   
-
       item.cardActive = true; //clock icon open/close
 
       if (item.cardActive === true) {
@@ -110,8 +115,6 @@ export default {
             item.cardActive = false;
             item.cardComplete = true;
             clearInterval(this.interval);
-
-          
           }
         }, 1000);
       }
@@ -140,6 +143,15 @@ export default {
     },
     deleteItem(index) {
       this.setData.splice(index, 1);
+    },
+  },
+
+  computed: {
+    filteredPosts() {
+      let lowerValue = this.searchInput;
+      return this.$props.setData.filter((item) =>
+        item.title.toLowerCase().includes(lowerValue.toLowerCase())
+      );
     },
   },
   watch: {
@@ -271,5 +283,27 @@ export default {
   background: rgba(128, 0, 128, 0.529);
   color: rgba(255, 255, 255, 0.985);
   cursor: pointer;
+}
+
+.search {
+  display: block;
+  position: fixed;
+  top: 2%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 400px;
+  z-index: 99999999;
+  background-color: rgba(255, 255, 255, 0.444);
+  backdrop-filter: blur(0.1rem);
+  border-radius: 15px;
+  border: none;
+  filter: drop-shadow(0mm 0mm 1mm rgba(128, 0, 128, 0.555));
+  padding: 5px 15px;
+  outline: none;
+  transition: 0.3s ease-in-out;
+}
+
+.search:focus {
+  filter: drop-shadow(0mm 0mm 1mm rgba(248, 167, 6, 0.555));
 }
 </style>
