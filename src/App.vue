@@ -2,7 +2,6 @@
   <div class="container-fluid">
     <Container :setData="textItem"></Container>
     <NewItem @reData="textItem.push($event)"></NewItem>
-
   </div>
 </template>
 
@@ -10,23 +9,19 @@
 import SideBar from "./components/SideBar.vue";
 import Container from "./components/Container.vue";
 import NewItem from "./components/NewItem.vue";
-import Search from "./components/Search.vue";
 export default {
   components: {
     SideBar,
     Container,
     NewItem,
-    Search,
   },
   data() {
     return {
       textItem: [],
-      searchInput:'',
+      searchInput: "",
     };
   },
-  methods:{
-
-  }
+  methods: {},
 };
 </script>
 
@@ -64,15 +59,19 @@ body {
 }
 
 .card {
-  background: rgba(0, 0, 0, 0.03);
-  backdrop-filter: blur(.5rem) ;
+  background: #00000008;
+  /* backdrop-filter: blur(8px) ; */
 
   border: none;
   border-top: 3px solid rgba(255, 255, 255, 0.936);
   border-right: 1px solid rgba(255, 255, 255, 0.664);
   border-radius: 30px;
 
-  filter: drop-shadow(0mm 0mm 3mm rgba(0, 0, 0, 0.323));
+  /* filter: drop-shadow(0mm 0mm 3mm rgba(0, 0, 0, 0.323)); */
+
+  box-shadow: 0mm 0mm 3mm rgba(0, 0, 0, 0.323);
+  -webkit-box-shadow: 0mm 0mm 3mm rgba(0, 0, 0, 0.323);
+  -moz-box-shadow: 0mm 0mm 3mm rgba(0, 0, 0, 0.323);
 
   height: 450px;
   width: 350px;
@@ -91,9 +90,9 @@ body {
   border-radius: 10px;
   border-top: 3px solid #ffffff;
   border-right: 2px solid #ffff;
-  border-bottom:1px solid rgba(255, 255, 255, 0.364) ;
-  border-left:1px solid rgba(255, 255, 255, 0.364) ;
- 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.364);
+  border-left: 1px solid rgba(255, 255, 255, 0.364);
+
   z-index: 1000;
 }
 

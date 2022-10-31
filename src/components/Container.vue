@@ -4,10 +4,15 @@
       type="text"
       v-model="searchInput"
       class="search"
-      placeholder="Find Keyword..."
+      :placeholder="blurV"
     />
 
-    <SideBar></SideBar>
+    <SideBar
+      @range="blurV = $event"
+      @rangeC="colorV = $event"
+      @rgba="rgbaC = $event"
+    ></SideBar>
+
     <div class="container">
       <div class="row d-flex justify-content-around">
         <!-- loop -->
@@ -17,7 +22,11 @@
           :key="index"
         >
           <!--##############-->
-          <div class="card" :class="{ cardComplete: item.cardComplete }">
+          <div
+            class="card"
+            :class="{ cardComplete: item.cardComplete }"
+            :style="customStyle"
+          >
             <div class="card-body scrollText">
               <span class="trashSpan"
                 ><i class="fa-solid fa-trash" @click="deleteItem(index)"></i
@@ -90,7 +99,9 @@ export default {
       minute: 0,
       interval: null,
       completeItem: [],
-      inputRange: 0,
+      blurV: "8",
+      colorV: "30",
+      rgbaC: "#00000008",
     };
   },
   methods: {
@@ -152,6 +163,31 @@ export default {
       return this.$props.setData.filter((item) =>
         item.title.toLowerCase().includes(lowerValue.toLowerCase())
       );
+    },
+    customStyle() {
+      let color = this.colorV.padStart(3, "0");
+
+      console.log(this.blurV);
+
+      return {
+        "backdrop-filter": `blur(${this.blurV}px)`,
+        "-webkit-backdrop-filter": `blur(${this.blurV}px)`,
+
+        background:
+          "rgba(" +
+          parseInt(this.rgbaC.slice(-6, -4), 16) +
+          "," +
+          parseInt(this.rgbaC.slice(-4, -2), 16) +
+          "," +
+          parseInt(this.rgbaC.slice(-2), 16) +
+          "," +
+          "." +
+          color +
+          ")",
+
+        // width: [this.blurV + "px"],
+        // height: [this.blurV + "px"],
+      };
     },
   },
   watch: {
@@ -305,5 +341,9 @@ export default {
 
 .search:focus {
   filter: drop-shadow(0mm 0mm 1mm rgba(248, 167, 6, 0.555));
+}
+
+.blur {
+  backdrop-filter: blur(9px);
 }
 </style>
