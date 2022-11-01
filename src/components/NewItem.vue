@@ -5,14 +5,14 @@
       <div>
         <input
           type="text"
-          class="title"
+          class="title text-danger"
           v-model="title"
           placeholder="Keyword.. (at least 3 letters)"
           ref="inputFocus"
         />
 
         <textarea
-          class="area"
+          class="area text-light"
           placeholder="What are you think..?"
           v-model="textInput"
         ></textarea>
@@ -54,6 +54,7 @@ export default {
     };
   },
   methods: {
+    // seconds&minutes loop
     changeBoard() {
       this.isBoard = !this.isBoard;
       for (let i = 0; i <= 59; i++) {
@@ -61,6 +62,9 @@ export default {
       }
     },
 
+
+
+    // send data
     setText() {
       
       if(this.title.split("").length<3){
@@ -86,7 +90,6 @@ export default {
         hour: 0,
         timerH: 0,
         cardActive: false,
-
         cardComplete: false,
       });
       console.log(this.reData)
@@ -99,6 +102,7 @@ export default {
       this.title=""
     },
 
+    // board toogle
     close() {
       this.isBoard = !this.isBoard;
     },
@@ -151,6 +155,7 @@ export default {
   box-shadow: 0mm 0mm 1mm white;
   border: none;
   border-radius: 10px;
+  z-index: 999999999;
 }
 
 .opt {
@@ -168,4 +173,25 @@ select {
   margin-bottom: 5px;
   border-radius: 5px;
 }
+
+
+@media only screen and (max-width:576px) {
+
+  .text-area{
+    right: -4%;
+  }
+
+  .opt {
+  display: block;
+  position: absolute;
+  top: 99%;
+  right: 10%;
+}
+  
+}
+
+
+
+
+
 </style>

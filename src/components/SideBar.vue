@@ -2,7 +2,7 @@
   <section class="sidebar">
     <div class="item">
       <i class="bi bi-window" @click="openClose()"></i>
-      <div v-show="this.open">
+      <div class="changeMen" v-show="this.open">
         <input
           class="changeGlass blur"
           type="range"
@@ -23,19 +23,15 @@
           max="999"
         />
       </div>
+
       <a
         href="https://github.com/oguzhanascier"
         target="_blank"
         rel="noopener noreferrer"
         ><i class="bi bi-github"> </i
       ></a>
-      <i class="bi bi-linkedin"></i>
 
-      <div class="customCard" v-if="open">
-        <p>backdrop-filter: blur({{ blurInput }}px)</p>
-        <p>color: {{ rgbaColor }}</p>
-        <p>opacity: 0.{{ colorInput }}</p>
-      </div>
+      <i class="bi bi-linkedin"></i>
     </div>
   </section>
 </template>
@@ -51,19 +47,13 @@ export default {
     };
   },
   methods: {
+    //sidebar toogle
     openClose() {
       this.open = !this.open;
-      console.log(this.open);
+      this.$emit("sideBar", this.open);
     },
-    // colorChange(e){
-    //   console.log(e.target.value)
-    // }
   },
-  computed: {
-    // colorChange(e){
-    //   // console.log(e)
-    // }
-  },
+  //  blur & color send parent &
   watch: {
     blurInput() {
       this.$emit("range", this.blurInput);
@@ -80,8 +70,11 @@ export default {
 
 <style scoped>
 .sidebar {
-  position: relative;
+  position: absolute;
+  height: 300px;
+  width: 100%;
 }
+
 .changeGlass {
   position: absolute;
   top: 25%;
@@ -105,14 +98,35 @@ export default {
   height: 40;
 }
 
-.customCard {
+
+
+@media only screen and (max-width: 768px) {
+  .changeGlass {
   position: absolute;
-  height: 120px;
-  width: 200px;
-  top: 65%;
-  left: 5%;
-  background: rgba(255, 255, 255, 0.094);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  top: 10%;
+  left: 103%;
+  width: 100px;
+  background-color: rgba(128, 0, 128, 0.276);
+}
+
+.changeColorOpacity {
+  position: absolute;
+  top: 50%;
+  left: 103%;
+  width: 100px;
+  background-color: #dcc58f;
+}
+.colorInput {
+  position: absolute;
+  top: 100%;
+  left: 103%;
+  width: 40px;
+  height: 40;
+}
+.changeMen{
+  bottom: 0;
+}
+
+
 }
 </style>

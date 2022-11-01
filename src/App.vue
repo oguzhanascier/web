@@ -6,22 +6,29 @@
 </template>
 
 <script>
-import SideBar from "./components/SideBar.vue";
 import Container from "./components/Container.vue";
 import NewItem from "./components/NewItem.vue";
 export default {
   components: {
-    SideBar,
     Container,
     NewItem,
   },
   data() {
     return {
       textItem: [],
-      searchInput: "",
     };
   },
-  methods: {},
+
+  mounted() {
+    if (localStorage.textItem) {
+      this.textItem = JSON.parse(localStorage.textItem);
+    }
+  },
+  watch: {
+    textItem(newNotes) {
+      localStorage.textItem = JSON.stringify(newNotes);
+    },
+  },
 };
 </script>
 
@@ -62,6 +69,8 @@ body {
   background: #00000008;
   /* backdrop-filter: blur(8px) ; */
 
+  top: 3%;
+
   border: none;
   border-top: 3px solid rgba(255, 255, 255, 0.936);
   border-right: 1px solid rgba(255, 255, 255, 0.664);
@@ -69,9 +78,6 @@ body {
 
   /* filter: drop-shadow(0mm 0mm 3mm rgba(0, 0, 0, 0.323)); */
 
-  box-shadow: 0mm 0mm 3mm rgba(0, 0, 0, 0.323);
-  -webkit-box-shadow: 0mm 0mm 3mm rgba(0, 0, 0, 0.323);
-  -moz-box-shadow: 0mm 0mm 3mm rgba(0, 0, 0, 0.323);
 
   height: 450px;
   width: 350px;
@@ -80,6 +86,25 @@ body {
   padding: 1rem;
 
   color: white;
+}
+
+@media only screen and (max-width: 576px) {
+  .card {
+    top: 18%;
+    left: 50%;
+    transform: translate(-60.5%);
+    width: 350px;
+    height: 350px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .card {
+    top: 23%;
+    right: 13%;
+    width: 330px;
+    height: 350px;
+  }
 }
 
 .item {
@@ -95,6 +120,37 @@ body {
 
   z-index: 1000;
 }
+
+@media only screen and (max-width: 768px) {
+  .item {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    height: 50px;
+    bottom: -10%;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 1;
+  }
+}
+
+
+@media only screen and (max-width: 992) {
+  .item {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    height: 50px;
+    bottom: -10%;
+    left: 20%;
+    z-index: 1;
+  }
+}
+
 
 .bi-github,
 .bi-linkedin,
@@ -142,7 +198,8 @@ body {
 .write:hover {
   cursor: pointer;
   transition: 0.3s ease-in-out;
-  box-shadow: 0mm 0mm 1mm rgb(114, 192, 219);
+  box-shadow: 0mm 0mm 1mm purple;
+  background: rgb(255, 255, 255);
 }
 
 .bi-pen {
@@ -150,7 +207,7 @@ body {
 }
 .bi-pen:hover {
   transition: 0.3s ease-in-out;
-  color: rgb(114, 192, 219);
+  color: purple;
 }
 
 .text-area {

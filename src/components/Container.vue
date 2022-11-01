@@ -1,23 +1,24 @@
 <template>
-  <div>
-    <input
-      type="text"
-      v-model="searchInput"
-      class="search"
-      :placeholder="blurV"
-    />
+  <div class="relative">
+      <input
+        type="text"
+        v-model="searchInput"
+        class="search"
+        placeholder=" Search Keywords.."
+      />
 
     <SideBar
       @range="blurV = $event"
       @rangeC="colorV = $event"
       @rgba="rgbaC = $event"
+      @sideBar="isOpen = $event"
     ></SideBar>
 
     <div class="container">
       <div class="row d-flex justify-content-around">
         <!-- loop -->
         <div
-          class="col-lg-4 col-md-6 col-sm-12"
+          class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-8 col-xs-12"
           v-for="(item, index) in filteredPosts"
           :key="index"
         >
@@ -26,6 +27,7 @@
             class="card"
             :class="{ cardComplete: item.cardComplete }"
             :style="customStyle"
+            v-if="!isOpen"
           >
             <div class="card-body scrollText">
               <span class="trashSpan"
@@ -71,7 +73,11 @@
               ></span>
             </div>
           </div>
+          <div class="card customCard" :style="customStyle" v-if="isOpen">
+          {{ customStyle }}
         </div>
+        </div>
+        
       </div>
       <div class="row">
         <div class="col-6" v-for="i in completeItem" :key="i">
@@ -95,16 +101,19 @@ export default {
     return {
       searchInput: "",
       clock: null,
-      second: 3,
+      second: 0,
       minute: 0,
       interval: null,
       completeItem: [],
       blurV: "8",
       colorV: "30",
       rgbaC: "#00000008",
+      isOpen: null,
+      
     };
   },
   methods: {
+    //setting watch
     timerStart(item, index) {
       item.cardActive = true; //clock icon open/close
 
@@ -129,41 +138,29 @@ export default {
           }
         }, 1000);
       }
-      //******************************************************** */
-
-      console.log(this.cardActive);
-
-      // setInterval(() => {
-      //   let now = new Date();
-      // let second = now.getSeconds();
-      // let minute = now.getMinutes();
-      // let hour = now.getHours();
-
-      //   let timsec = Math.abs(sec - second);
-      //   let timmit = Math.abs(min - minute);
-      //   let timhou = Math.abs(hou - hour);
-
-      //   item.second = timsec;
-      //   item.minute = timmit;
-      //   item.hour = timhou;
-      // }, 1000);
+      localStorage.textItem = JSON.stringify(newNotes);
     },
+    //stop watch
     stopWatch(item) {
       item.cardActive = false;
       clearInterval(this.interval);
     },
+    // delete item
     deleteItem(index) {
       this.setData.splice(index, 1);
     },
   },
 
   computed: {
+    // search
     filteredPosts() {
       let lowerValue = this.searchInput;
       return this.$props.setData.filter((item) =>
         item.title.toLowerCase().includes(lowerValue.toLowerCase())
       );
     },
+
+    // card style
     customStyle() {
       let color = this.colorV.padStart(3, "0");
 
@@ -171,6 +168,7 @@ export default {
 
       return {
         "backdrop-filter": `blur(${this.blurV}px)`,
+
         "-webkit-backdrop-filter": `blur(${this.blurV}px)`,
 
         background:
@@ -188,11 +186,6 @@ export default {
         // width: [this.blurV + "px"],
         // height: [this.blurV + "px"],
       };
-    },
-  },
-  watch: {
-    timerStart(value) {
-      console.log(value);
     },
   },
 };
@@ -328,7 +321,7 @@ export default {
   left: 50%;
   transform: translate(-50%);
   width: 400px;
-  z-index: 99999999;
+  z-index: 1;
   background-color: rgba(255, 255, 255, 0.444);
   backdrop-filter: blur(0.1rem);
   border-radius: 15px;
@@ -339,6 +332,19 @@ export default {
   transition: 0.3s ease-in-out;
 }
 
+@media only screen and (max-width: 768px) {
+  .relative {
+    position: relative;
+  }
+  .search {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    width: 350px;
+  }
+ 
+}
+
 .search:focus {
   filter: drop-shadow(0mm 0mm 1mm rgba(248, 167, 6, 0.555));
 }
@@ -346,4 +352,13 @@ export default {
 .blur {
   backdrop-filter: blur(9px);
 }
+
+.customCard {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+}
+
+
 </style>
