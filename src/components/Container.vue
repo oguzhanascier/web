@@ -1,11 +1,11 @@
 <template>
   <div class="relative">
-      <input
-        type="text"
-        v-model="searchInput"
-        class="search"
-        placeholder=" Search Keywords.."
-      />
+    <input
+      type="text"
+      v-model="searchInput"
+      class="search"
+      placeholder=" Search Keywords.."
+    />
 
     <SideBar
       @range="blurV = $event"
@@ -18,7 +18,7 @@
       <div class="row d-flex justify-content-around">
         <!-- loop -->
         <div
-          class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-8 col-xs-12"
+          class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-8 col-xs-12 mb-5"
           v-for="(item, index) in filteredPosts"
           :key="index"
         >
@@ -74,10 +74,9 @@
             </div>
           </div>
           <div class="card customCard" :style="customStyle" v-if="isOpen">
-          {{ customStyle }}
+            {{ customStyle }}
+          </div>
         </div>
-        </div>
-        
       </div>
       <div class="row">
         <div class="col-6" v-for="i in completeItem" :key="i">
@@ -109,7 +108,6 @@ export default {
       colorV: "30",
       rgbaC: "#00000008",
       isOpen: null,
-      
     };
   },
   methods: {
@@ -136,9 +134,12 @@ export default {
             item.cardComplete = true;
             clearInterval(this.interval);
           }
+
+          localStorage.textItem.cardComplete = JSON.stringify(
+            item.cardComplete
+          );
         }, 1000);
       }
-      localStorage.textItem = JSON.stringify(newNotes);
     },
     //stop watch
     stopWatch(item) {
@@ -341,8 +342,8 @@ export default {
     top: 0%;
     left: 50%;
     width: 350px;
+    z-index: 1;
   }
- 
 }
 
 .search:focus {
@@ -355,10 +356,8 @@ export default {
 
 .customCard {
   position: absolute;
-  top: 45%;
+  top: 40%;
   left: 45%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -40%);
 }
-
-
 </style>

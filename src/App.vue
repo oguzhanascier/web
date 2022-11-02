@@ -33,6 +33,11 @@ export default {
 </script>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   /* Importing a font from google fonts. */
   @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap");
@@ -48,6 +53,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
+  z-index: -9999;
 }
 .container-fluid {
   height: 100%;
@@ -57,10 +64,10 @@ body {
 .container {
   display: flex;
   position: relative;
-  width: 90%;
+  justify-content: center;
+  width: 100%;
   min-height: 100vh !important;
   border-radius: 30px;
-
   margin-top: 3%;
   margin-bottom: 3%;
 }
@@ -68,42 +75,66 @@ body {
 .card {
   background: #00000008;
   /* backdrop-filter: blur(8px) ; */
-
-  top: 3%;
-
+  margin: 1.5rem;
+  padding: 1.3rem;
+  margin-bottom: 1rem;
+  width: 350px;
+  height: 450px;
+  top: 13%;
+  left: 50%;
+  transform: translate(-50%);
   border: none;
   border-top: 3px solid rgba(255, 255, 255, 0.936);
   border-right: 1px solid rgba(255, 255, 255, 0.664);
   border-radius: 30px;
 
-  /* filter: drop-shadow(0mm 0mm 3mm rgba(0, 0, 0, 0.323)); */
-
-
-  height: 450px;
-  width: 350px;
-
-  margin: 1.3rem;
-  padding: 1rem;
-
   color: white;
 }
 
-@media only screen and (max-width: 576px) {
+/* @media only screen and (max-width: 576px) {
   .card {
     top: 18%;
     left: 50%;
     transform: translate(-60.5%);
-    width: 350px;
+    width: 300px;
     height: 350px;
+    margin-bottom: 1rem;
   }
-}
+} */
 
-@media only screen and (max-width: 768px) {
+/* @media only screen and (max-width: 768px) {
   .card {
-    top: 23%;
-    right: 13%;
-    width: 330px;
-    height: 350px;
+    top: 33%;
+    width: 350px;
+    height: 500px;
+    transform: translate(-50%);
+    margin-bottom: 1rem;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    left: 50%;
+    transform: translate(-55%);
+    flex-direction: column;
+    margin-bottom: 100px;
+  }
+} */
+
+@media only screen and (max-width: 1232px) {
+  .card {
+    top: 70%;
+    width: 300px;
+    height: 450px;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    margin-bottom: 1rem;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 100px;
   }
 }
 
@@ -118,7 +149,7 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.364);
   border-left: 1px solid rgba(255, 255, 255, 0.364);
 
-  z-index: 1000;
+  z-index: 1;
 }
 
 @media only screen and (max-width: 768px) {
@@ -136,7 +167,6 @@ body {
   }
 }
 
-
 @media only screen and (max-width: 992) {
   .item {
     position: absolute;
@@ -150,7 +180,6 @@ body {
     z-index: 1;
   }
 }
-
 
 .bi-github,
 .bi-linkedin,
@@ -208,17 +237,6 @@ body {
 .bi-pen:hover {
   transition: 0.3s ease-in-out;
   color: purple;
-}
-
-.text-area {
-  position: fixed;
-  top: 8%;
-  right: 0;
-  width: 400px;
-  height: 400px;
-
-  /* background: rgba(136, 136, 136, 0.093);
-  box-shadow: 0mm 0mm 1mm white; */
 }
 
 .area {

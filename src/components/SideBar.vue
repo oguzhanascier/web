@@ -103,28 +103,36 @@ export default {
 @media only screen and (max-width: 768px) {
   .changeGlass {
   position: absolute;
-  top: 10%;
-  left: 103%;
+  top: 80%;
+  left: 93%;
   width: 100px;
   background-color: rgba(128, 0, 128, 0.276);
+  transform: rotate(-90deg);
+
 }
 
 .changeColorOpacity {
   position: absolute;
-  top: 50%;
+  top: 80%;
   left: 103%;
   width: 100px;
   background-color: #dcc58f;
+  transform: rotate(-90deg);
+
 }
 .colorInput {
   position: absolute;
-  top: 100%;
-  left: 103%;
+  top: 10%;
+  left: 97%;
   width: 40px;
   height: 40;
+  transform: rotate(-90deg);
+  z-index: 1;
 }
 .changeMen{
-  bottom: 0;
+
+z-index: 1;
+  
 }
 
 

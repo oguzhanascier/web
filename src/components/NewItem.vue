@@ -92,7 +92,6 @@ export default {
         cardActive: false,
         cardComplete: false,
       });
-      console.log(this.reData)
 
 
       }
@@ -110,7 +109,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style >
 .toggle {
   display: none;
 }
@@ -174,11 +173,23 @@ select {
   border-radius: 5px;
 }
 
+.text-area {
+  position: fixed;
+  top: 8%;
+  right: 0;
+  width: 400px;
+  height: 400px;
+
+  /* background: rgba(136, 136, 136, 0.093);
+  box-shadow: 0mm 0mm 1mm white; */
+}
+
 
 @media only screen and (max-width:576px) {
 
   .text-area{
-    right: -4%;
+    right: -1%;
+    top: 20%;
   }
 
   .opt {
@@ -191,6 +202,31 @@ select {
 }
 
 
+@media only screen and (max-width:768px) {
+
+.text-area{
+  top: 20%;
+
+}
+
+
+
+}
+
+.area{
+  z-index: 990000;
+}
+
+.fa-x{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: rgba(128, 0, 128, 0.536);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
 
 
 
