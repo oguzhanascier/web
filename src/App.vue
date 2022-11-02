@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
-    <Container :setData="textItem"></Container>
-    <NewItem @reData="textItem.push($event)"></NewItem>
+    <Container :setData="cardList"></Container>
+    <NewItem @reData="cardList.push($event)"></NewItem>
   </div>
 </template>
 
@@ -15,18 +15,19 @@ export default {
   },
   data() {
     return {
-      textItem: [],
+      cardList: [],
     };
   },
 
   mounted() {
-    if (localStorage.textItem) {
-      this.textItem = JSON.parse(localStorage.textItem);
+    if (localStorage.cardList) {
+ 
+      this.cardList = JSON.parse(localStorage.cardList);
     }
   },
   watch: {
-    textItem(newNotes) {
-      localStorage.textItem = JSON.stringify(newNotes);
+    cardList(newNotes) {
+      localStorage.cardList = JSON.stringify(newNotes);
     },
   },
 };

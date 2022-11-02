@@ -76,7 +76,7 @@ export default {
       let year = date.getFullYear();
 
 
-      let randomNumber = "azFazQwwg" + Math.floor(Math.random() * 100 + "eQ5");
+      let randomNumber = "azFazQwwg" + Math.floor(Math.random() * 100990);
       this.$emit("reData", {
         id: randomNumber,
         title: this.title,

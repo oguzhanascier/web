@@ -34,7 +34,8 @@
                 ><i class="fa-solid fa-trash" @click="deleteItem(index)"></i
               ></span>
 
-              <h5 class="card-title">{{ item.title }}</h5>
+              <h5  class="card-title">{{ item.title }}</h5>
+            
 
               <h6 class="card-subtitle mb-2 text-muted">
                 {{ item.date.day }}.{{ item.date.month }}.{{ item.date.year }}
@@ -73,6 +74,7 @@
               ></span>
             </div>
           </div>
+          
           <div class="card customCard" :style="customStyle" v-if="isOpen">
             {{ customStyle }}
           </div>
@@ -98,6 +100,7 @@ export default {
   },
   data() {
     return {
+      isEditing: false,
       searchInput: "",
       clock: null,
       second: 0,
@@ -113,6 +116,10 @@ export default {
   methods: {
     //setting watch
     timerStart(item, index) {
+      const localstorageData = JSON.parse(localStorage.cardList); // parse etmek > string datayı kullanabileceğin ıobjeeye çevirioy
+      const currentItem = item;
+      
+      console.log(item);
       item.cardActive = true; //clock icon open/close
 
       if (item.cardActive === true) {
@@ -135,9 +142,27 @@ export default {
             clearInterval(this.interval);
           }
 
-          localStorage.textItem.cardComplete = JSON.stringify(
-            item.cardComplete
-          );
+     
+
+          const updatedList = localstorageData.map((donenItem) => {
+            if (donenItem.id === currentItem.id) {
+              return {
+                ...donenItem,
+                second: time.second,
+                cardComplete: item.cardComplete,
+                cardActive: item.cardActive
+              };
+            } else {
+              return donenItem;
+            }
+          });
+
+          // console.log(updatedList)
+          localStorage.cardList = JSON.stringify(updatedList);
+
+          // JSON.parse( localStorage.cardList).cardComplete = JSON.stringify(
+          //   item.cardComplete
+          // );
         }, 1000);
       }
     },
