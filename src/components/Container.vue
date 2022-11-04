@@ -23,66 +23,23 @@
           :key="index"
         >
           <!--##############-->
-          <div
-            class="card"
-            :class="{ cardComplete: item.cardComplete }"
-            :style="customStyle"
-            v-if="!isOpen"
-          >
-            <div class="card-body scrollText">
-              <span class="trashSpan"
-                ><i class="fa-solid fa-trash" @click="deleteItem(index)"></i
-              ></span>
 
-              <h5  class="card-title">{{ item.title }}</h5>
-            
-
-              <h6 class="card-subtitle mb-2 text-muted">
-                {{ item.date.day }}.{{ item.date.month }}.{{ item.date.year }}
-              </h6>
-              <p class="card-text">
-                {{ item.text }}
-              </p>
-            </div>
-
-            <div
-              class="timer"
-              :class="{ completeTimer: item.cardActive }"
-              v-if="(!item.timerM == 0) | (!item.timerS == 0)"
-            >
-              <i
-                class="bi bi-alarm"
-                @click="timerStart(item, index)"
-                v-show="!item.cardActive"
-              ></i>
-
-              <span style="margin-left: 15px" v-if="item.hour < 10"
-                >0{{ item.hour }}:</span
-              >
-              <span style="margin-left: 15px" v-else>{{ item.hour }}:</span>
-
-              <span v-if="item.minute < 10">0{{ item.minute }}:</span>
-              <span v-else>{{ item.minute }}:</span>
-
-              <span v-if="item.second < 10">0{{ item.second }}</span>
-              <span v-else>{{ item.second }}</span>
-              <span
-                class="stopWatch ms-2 text"
-                @click="stopWatch(item)"
-                v-show="item.cardActive"
-                ><i class="fa-solid fa-pause"></i
-              ></span>
-            </div>
-          </div>
-          
-          <div class="card customCard" :style="customStyle" v-if="isOpen">
-            {{ customStyle }}
-          </div>
+          <Card
+            :sendItems="item"
+            :timer="timerStart"
+            :customBar="isOpen"
+            :deleteCard="deleteItem"
+            :customCard="customStyle"
+            :cardIndex="index"
+            :stopW="stopWatch"
+          ></Card>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-6" v-for="i in completeItem" :key="i">
-          <p>{{ i.text }}</p>
+        <div class="card customCard" :style="customStyle" v-if="isOpen">
+          <div class="card-body scrollText">
+            <p class="card-text">
+              {{ customStyle }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -90,6 +47,7 @@
 </template>
 
 <script>
+import Card from "./Card.vue";
 import NewItem from "./NewItem.vue";
 import SideBar from "./SideBar.vue";
 export default {
@@ -97,6 +55,7 @@ export default {
   components: {
     NewItem,
     SideBar,
+    Card,
   },
   data() {
     return {
@@ -115,74 +74,28 @@ export default {
   },
   methods: {
     //setting watch
-    timerStart(item, index) {
-      const localstorageData = JSON.parse(localStorage.cardList); // parse etmek > string datayı kullanabileceğin ıobjeeye çevirioy
-      const currentItem = item;
-      
-      console.log(item);
-      item.cardActive = true; //clock icon open/close
-
-      if (item.cardActive === true) {
-        let time = item;
-
-        this.interval = setInterval(() => {
-          time.second++;
-          if (time.second >= 60) {
-            time.minute += 1;
-            time.second = 0;
-          }
-          if (time.minute >= 60) {
-            time.hour += 1;
-            time.minute = 0;
-          }
-          if (time.second == time.timerS && time.minute == time.timerM) {
-            alert(item.title);
-            item.cardActive = false;
-            item.cardComplete = true;
-            clearInterval(this.interval);
-          }
-
-     
-
-          const updatedList = localstorageData.map((donenItem) => {
-            if (donenItem.id === currentItem.id) {
-              return {
-                ...donenItem,
-                second: time.second,
-                cardComplete: item.cardComplete,
-                cardActive: item.cardActive
-              };
-            } else {
-              return donenItem;
-            }
-          });
-
-          // console.log(updatedList)
-          localStorage.cardList = JSON.stringify(updatedList);
-
-          // JSON.parse( localStorage.cardList).cardComplete = JSON.stringify(
-          //   item.cardComplete
-          // );
-        }, 1000);
-      }
+    startInterval(){
+      this.interval = setInterval(() => {
+          
+      }, 1000)
     },
-    //stop watch
-    stopWatch(item) {
-      item.cardActive = false;
-      clearInterval(this.interval);
-    },
+
+   
     // delete item
     deleteItem(index) {
       this.setData.splice(index, 1);
+
+      console.log(index);
     },
   },
 
   computed: {
     // search
     filteredPosts() {
-      let lowerValue = this.searchInput;
+      let lowerValue = this.searchInput.toLowerCase();
       return this.$props.setData.filter((item) =>
-        item.title.toLowerCase().includes(lowerValue.toLowerCase())
+
+        item.title.toLowerCase().includes(lowerValue)
       );
     },
 
@@ -217,7 +130,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .card-title {
   font-weight: 700;
   margin-bottom: 20px;
@@ -301,23 +214,6 @@ export default {
   border-radius: 10px;
 }
 
-.cardComplete {
-  background: rgba(255, 0, 0, 0.03);
-  backdrop-filter: blur(0.5rem);
-
-  border: none;
-  border-top: 3px solid rgba(180, 0, 240, 0.43);
-  border-right: 1px solid rgba(180, 0, 240, 0.264);
-  border-radius: 30px;
-
-  height: 450px;
-  width: 350px;
-
-  margin: 1.3rem;
-  padding: 1rem;
-
-  color: white;
-}
 
 .completeTimer {
   color: rgba(128, 0, 128, 0.529);
@@ -325,19 +221,6 @@ export default {
 
 .active {
   display: none;
-}
-
-.stopWatch {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 25px;
-  height: 25px;
-  border-radius: 5px;
-  background: rgba(128, 0, 128, 0.529);
-  color: rgba(255, 255, 255, 0.985);
-  cursor: pointer;
 }
 
 .search {
@@ -381,8 +264,8 @@ export default {
 
 .customCard {
   position: absolute;
-  top: 40%;
-  left: 45%;
-  transform: translate(-50%, -40%);
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

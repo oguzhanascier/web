@@ -63,9 +63,11 @@ body {
   position: relative;
 }
 .container {
+  top: 13%;
+
   display: flex;
   position: relative;
-  justify-content: center;
+  justify-content: start;
   width: 100%;
   min-height: 100vh !important;
   border-radius: 30px;
@@ -75,13 +77,12 @@ body {
 
 .card {
   background: #00000008;
-  /* backdrop-filter: blur(8px) ; */
+  backdrop-filter: blur(8px) ;
   margin: 1.5rem;
   padding: 1.3rem;
   margin-bottom: 1rem;
   width: 350px;
   height: 450px;
-  top: 13%;
   left: 50%;
   transform: translate(-50%);
   border: none;
@@ -92,50 +93,35 @@ body {
   color: white;
 }
 
-/* @media only screen and (max-width: 576px) {
-  .card {
-    top: 18%;
-    left: 50%;
-    transform: translate(-60.5%);
-    width: 300px;
-    height: 350px;
-    margin-bottom: 1rem;
-  }
-} */
 
-/* @media only screen and (max-width: 768px) {
-  .card {
-    top: 33%;
-    width: 350px;
-    height: 500px;
-    transform: translate(-50%);
-    margin-bottom: 1rem;
-  }
-  .container {
-    display: flex;
-    justify-content: center;
-    left: 50%;
-    transform: translate(-55%);
-    flex-direction: column;
-    margin-bottom: 100px;
-  }
-} */
+
+
 
 @media only screen and (max-width: 1232px) {
   .card {
-    top: 70%;
+    /* top: 80%; */
     width: 300px;
     height: 450px;
     left: 45%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%);
     margin-bottom: 1rem;
   }
+
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 100px;
+  }
+  .row{
+    margin-top: 3%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+
+  .row{
+    margin-top: 30%;
   }
 }
 
@@ -252,4 +238,6 @@ body {
   border-radius: 30px;
   outline: none;
 }
+
+
 </style>

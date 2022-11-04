@@ -76,7 +76,11 @@ export default {
       let year = date.getFullYear();
 
 
-      let randomNumber = "azFazQwwg" + Math.floor(Math.random() * 100990);
+      let padSecond=this.second.toString().padStart(2,'0')
+      let padMinute=this.minute.toString().padStart(2,'0')
+
+
+      let randomNumber = Math.floor(Math.random() * 90100990);
       this.$emit("reData", {
         id: randomNumber,
         title: this.title,
@@ -84,9 +88,9 @@ export default {
         text: this.textInput,
         isCompleted: false,
         second: 0,
-        timerS: this.second,
+        timerS: padSecond,
         minute: 0,
-        timerM: this.minute,
+        timerM: padMinute,
         hour: 0,
         timerH: 0,
         cardActive: false,
