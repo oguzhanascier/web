@@ -30,7 +30,6 @@
         <div class="totalTime">
           Total Time: {{ sendItems.timerM }}:{{ sendItems.timerS }}
         </div>
-        <!-- <span class="totalTime" > You didn't choose a time </span> -->
 
         <i
           class="bi bi-alarm"
@@ -56,10 +55,62 @@
       </div>
     </div>
 
-    <!-- 
-    <div class="card customCard" :style="customCard" v-show="customBar">
+    <!-- <div
+      v-else
+
+      class="card neuMorpCard"
+      :class="{ cardComplete: sendItems.cardComplete }"
+    >
       <div class="card-body scrollText">
-        {{ customCard }}
+        <span class="trashSpan"
+          ><i
+            class="fa-solid fa-trash neuMorpTrash"
+            @click="deleteCard(cardIndex)"
+          ></i
+        ></span>
+
+        <h5 class="card-title">{{ sendItems.title }}</h5>
+
+        <h6 class="card-subtitle mb-2 text-muted">
+          {{ sendItems.date.day }}.{{ sendItems.date.month }}.{{
+            sendItems.date.year
+          }}
+        </h6>
+        <p class="card-text">
+          {{ sendItems.text }}
+        </p>
+      </div>
+
+      <div
+        class="timer neuMorpTimer"
+        :class="{ completeTimer: sendItems.cardActive }"
+        v-if="sendItems.timerM > 0 || sendItems.timerS > 0"
+      >
+        <div class="totalTime">
+          Total Time: {{ sendItems.timerM }}:{{ sendItems.timerS }}
+        </div>
+
+        <i
+          class="bi bi-alarm  neuMorpStop "
+          @click="timerStart(sendItems)"
+          v-show="!sendItems.cardActive"
+        ></i>
+        <span style="margin-left: 15px" v-if="sendItems.hour < 10"
+          >0{{ sendItems.hour }}:</span
+        >
+        <span style="margin-left: 15px" v-else>{{ sendItems.hour }}:</span>
+
+        <span v-if="sendItems.minute < 10">0{{ sendItems.minute }}:</span>
+        <span v-else>{{ sendItems.minute }}:</span>
+
+        <span v-if="sendItems.second < 10">0{{ sendItems.second }}</span>
+        <span v-else>{{ sendItems.second }}</span>
+        <span
+          class="stopWatch ms-2"
+          @click="stopWatch(sendItems)"
+          v-show="sendItems.cardActive"
+          ><i class="fa-solid fa-pause neuMorpPause"></i
+        ></span>
       </div>
     </div> -->
   </div>
@@ -75,10 +126,10 @@ export default {
     "customCard",
     "cardIndex",
     "stopW",
+    "moon"
   ],
   data() {
     return {
-      at: "at",
       interval: null,
     };
   },
@@ -89,14 +140,14 @@ export default {
     },
     // timer
     timerStart(item) {
-     ; // parse etmek > string datayı kullanabileceğin ıobjeeye çevirioy
+      // parse etmek > string datayı kullanabileceğin ıobjeeye çevirioy
 
       const currentItem = item;
       item.cardActive = true; //clock icon open/close
 
       if (item.cardActive === true) {
         this.interval = setInterval(() => {
-          const localstorageData = JSON.parse(localStorage.cardList)
+          const localstorageData = JSON.parse(localStorage.cardList);
 
           currentItem.second++;
           if (currentItem.second >= 60) {
@@ -107,7 +158,10 @@ export default {
             currentItem.hour += 1;
             currentItem.minute = 0;
           }
-          if (currentItem.second == currentItem.timerS && currentItem.minute == currentItem.timerM) {
+          if (
+            currentItem.second == currentItem.timerS &&
+            currentItem.minute == currentItem.timerM
+          ) {
             alert(currentItem.title);
             currentItem.cardActive = true;
             currentItem.cardComplete = true;
@@ -189,10 +243,59 @@ export default {
   position: absolute;
 }
 
+.neuMorpPause{
+  border-radius: 2px;
+  background: #131419;
+  box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.1),
+    2px 2px 4px rgba(0, 0, 0, 0.5);
+
+}
+
+.neuMorpPause:hover{
+  border-radius: 2px;
+  background: #131419;
+  box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.1) inset,
+    2px 2px 4px rgba(0, 0, 0, 0.5) inset;
+    color: rgb(132, 132, 132);
+
+}
+
+
 .totalTime {
   position: absolute;
   bottom: 15%;
   left: 8%;
   font-size: 12px;
+}
+
+.neuMorpCard {
+  background: #131419;
+  border: none;
+  border-radius: 50px;
+  box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
+    5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.neuMorpTrash {
+  border-radius: 2px;
+  background: #131419;
+  box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.1),
+    2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.neuMorpTrash:hover {
+  border-radius: 2px;
+  background: #131419;
+  color: #ccc;
+  box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.5), 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.neuMorpTimer{
+  color: rgb(123, 123, 123);
+}
+
+.neuMorpStop{
+  color: rgb(212, 212, 212);
+
 }
 </style>

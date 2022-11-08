@@ -3,7 +3,7 @@
     <input
       type="text"
       v-model="searchInput"
-      class="search"
+      class="search neuMorpSearch"
       placeholder=" Search Keywords.."
     />
 
@@ -12,6 +12,7 @@
       @rangeC="colorV = $event"
       @rgba="rgbaC = $event"
       @sideBar="isOpen = $event"
+      @morp="morpToggle=$event"
     ></SideBar>
 
     <div class="container">
@@ -32,6 +33,7 @@
             :customCard="customStyle"
             :cardIndex="index"
             :stopW="stopWatch"
+            :moon="morpToggle"
           ></Card>
         </div>
         <div class="card customCard" :style="customStyle" v-if="isOpen">
@@ -70,15 +72,12 @@ export default {
       colorV: "30",
       rgbaC: "#00000008",
       isOpen: null,
+      morpToggle:null,
     };
   },
   methods: {
     //setting watch
-    startInterval(){
-      this.interval = setInterval(() => {
-          
-      }, 1000)
-    },
+   
 
    
     // delete item
@@ -235,11 +234,33 @@ export default {
   backdrop-filter: blur(0.1rem);
   border-radius: 15px;
   border: none;
-  filter: drop-shadow(0mm 0mm 1mm rgba(128, 0, 128, 0.555));
+  box-shadow: 0mm 0mm 1mm rgba(128, 0, 128, 0.555);
   padding: 5px 15px;
   outline: none;
   transition: 0.3s ease-in-out;
 }
+
+.neuMorpSearch{
+  background: #131419;
+  border: none;
+  color: #999;
+  border-radius: 50px;
+  box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
+    5px 5px 15px rgba(0, 0, 0, 0.5);
+
+}
+
+
+.neuMorpSearch:focus{
+  box-shadow: -2px -2px 6px rgba(0, 0, 0, 0.8) inset,
+    2px 2px 6px rgba(0, 0, 0, 0.5) inset !important;
+  color: #333;
+
+}
+
+
+
+
 
 @media only screen and (max-width: 768px) {
   .relative {
@@ -255,7 +276,7 @@ export default {
 }
 
 .search:focus {
-  filter: drop-shadow(0mm 0mm 1mm rgba(248, 167, 6, 0.555));
+  box-shadow: (0mm 0mm 1mm rgba(248, 167, 6, 0.555));
 }
 
 .blur {

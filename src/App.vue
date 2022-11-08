@@ -44,7 +44,8 @@ body {
   @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap");
   font-family: "Open Sans", sans-serif;
   /* Setting the background image to the body of the page. */
-  background: url(./assets/milad-fakurian-PGdW_bHDbpI-unsplash.jpg);
+  /* background: url(./assets/milad-fakurian-PGdW_bHDbpI-unsplash.jpg); */
+  background: #131419;
   background-position: center center;
   background-size: 100% 100%;
   background-attachment: fixed;
@@ -129,6 +130,7 @@ body {
   display: flex;
   flex-direction: column;
   position: fixed;
+  justify-content: space-between;
   top: 15%;
   border-radius: 10px;
   border-top: 3px solid #ffffff;
@@ -143,7 +145,8 @@ body {
   .item {
     position: absolute;
     display: flex;
-    justify-content: center;
+    
+    justify-content: space-between;
     align-items: center;
     flex-direction: row;
     height: 50px;
@@ -158,7 +161,7 @@ body {
   .item {
     position: absolute;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-direction: row;
     height: 50px;
@@ -168,21 +171,23 @@ body {
   }
 }
 
+
 .bi-github,
 .bi-linkedin,
-.bi-window {
+.bi-window,
+.bi-moon {
   transition: 0.5s ease-in-out;
   font-size: 30px;
+  margin:10px 10px 10px 10px;
   color: #7524ab83;
-
   text-shadow: 0mm 0mm 1mm rgba(11, 6, 6, 0.478);
-  margin: 20px;
   cursor: pointer;
 }
 
-.bi-github:hover,
-.bi-linkedin:hover,
-.bi-window:hover {
+.bi-github,
+.bi-linkedin,
+.bi-window,
+.bi-moon:hover{
   backdrop-filter: blur(1rem);
   transition: 0.3s ease-in-out;
   color: #ffffff;
@@ -226,18 +231,7 @@ body {
   color: purple;
 }
 
-.area {
-  height: 400px;
-  width: 350px;
-  margin: 1.3rem;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.093);
-  backdrop-filter: blur(0.5rem);
-  box-shadow: 0mm 0mm 1mm rgba(255, 255, 255, 0.52);
-  border: none;
-  border-radius: 30px;
-  outline: none;
-}
+
 
 
 </style>
