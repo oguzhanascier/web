@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div
+    <!-- <div
       v-if="!customBar"
       class="card"
       :class="{ cardComplete: sendItems.cardComplete }"
@@ -53,18 +53,20 @@
           ><i class="fa-solid fa-pause"></i
         ></span>
       </div>
-    </div>
+    </div> -->
 
-    <!-- <div
-      v-else
+    <div 
+    v-if="!customBar"
 
-      class="card neuMorpCard"
-      :class="{ cardComplete: sendItems.cardComplete }"
+
+      class="card "
+      :class="[{ cardComplete: sendItems.cardComplete }, {neuMorpCard: moon}]"
     >
       <div class="card-body scrollText">
         <span class="trashSpan"
           ><i
-            class="fa-solid fa-trash neuMorpTrash"
+            class="fa-solid fa-trash "
+            :class="{neuMorpTrash : moon}"
             @click="deleteCard(cardIndex)"
           ></i
         ></span>
@@ -82,8 +84,8 @@
       </div>
 
       <div
-        class="timer neuMorpTimer"
-        :class="{ completeTimer: sendItems.cardActive }"
+        class="timer "
+        :class="[{ completeTimer: sendItems.cardActive },{neuMorpTimer: moon} ] "
         v-if="sendItems.timerM > 0 || sendItems.timerS > 0"
       >
         <div class="totalTime">
@@ -91,7 +93,8 @@
         </div>
 
         <i
-          class="bi bi-alarm  neuMorpStop "
+          class="bi bi-alarm   "
+          :class="{neuMorpStop: moon}"
           @click="timerStart(sendItems)"
           v-show="!sendItems.cardActive"
         ></i>
@@ -109,10 +112,10 @@
           class="stopWatch ms-2"
           @click="stopWatch(sendItems)"
           v-show="sendItems.cardActive"
-          ><i class="fa-solid fa-pause neuMorpPause"></i
+          ><i class="fa-solid fa-pause " :class="{neuMorpPause: moon}"></i
         ></span>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -126,7 +129,7 @@ export default {
     "customCard",
     "cardIndex",
     "stopW",
-    "moon"
+    "moon",
   ],
   data() {
     return {
@@ -140,15 +143,11 @@ export default {
     },
     // timer
     timerStart(item) {
-      // parse etmek > string datayı kullanabileceğin ıobjeeye çevirioy
-
       const currentItem = item;
       item.cardActive = true; //clock icon open/close
-
       if (item.cardActive === true) {
         this.interval = setInterval(() => {
           const localstorageData = JSON.parse(localStorage.cardList);
-
           currentItem.second++;
           if (currentItem.second >= 60) {
             currentItem.minute += 1;
@@ -173,7 +172,6 @@ export default {
                 ...donenItem,
                 second: currentItem.second,
                 minute: currentItem.minute,
-
                 cardComplete: currentItem.cardComplete,
                 cardActive: currentItem.cardActive,
               };
@@ -182,20 +180,20 @@ export default {
             }
           });
           localStorage.cardList = JSON.stringify(updatedList);
-
           console.log(updatedList);
-          // JSON.parse( localStorage.cardList).cardComplete = JSON.stringify(
-          //   item.cardComplete
-          // );
         }, 1000);
       }
     },
     // stop
     stopWatch(item) {
       item.cardActive = false;
-
       clearInterval(this.interval);
     },
+  },
+  mounted() {
+    if (localStorage.cssMorp) {
+      this.moon = JSON.parse(localStorage.cssMorp);
+    }
   },
 };
 </script>
@@ -243,23 +241,20 @@ export default {
   position: absolute;
 }
 
-.neuMorpPause{
+.neuMorpPause {
   border-radius: 2px;
   background: #131419;
   box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.1),
     2px 2px 4px rgba(0, 0, 0, 0.5);
-
 }
 
-.neuMorpPause:hover{
+.neuMorpPause:hover {
   border-radius: 2px;
   background: #131419;
   box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.1) inset,
     2px 2px 4px rgba(0, 0, 0, 0.5) inset;
-    color: rgb(132, 132, 132);
-
+  color: rgb(132, 132, 132);
 }
-
 
 .totalTime {
   position: absolute;
@@ -290,12 +285,11 @@ export default {
   box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.5), 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.neuMorpTimer{
+.neuMorpTimer {
   color: rgb(123, 123, 123);
 }
 
-.neuMorpStop{
+.neuMorpStop {
   color: rgb(212, 212, 212);
-
 }
 </style>

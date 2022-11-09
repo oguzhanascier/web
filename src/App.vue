@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid">
-    <Container :setData="cardList"></Container>
-    <NewItem @reData="cardList.push($event)"></NewItem>
+  <div class="container-fluid" :class="{neuCont:morp}">
+    <Container :setData="cardList"  @moon="morp = $event"></Container>
+    <NewItem @reData="cardList.push($event)" :itemMorp="morp"></NewItem>
   </div>
 </template>
 
@@ -16,13 +16,16 @@ export default {
   data() {
     return {
       cardList: [],
+      morp: null,
     };
   },
 
   mounted() {
     if (localStorage.cardList) {
- 
       this.cardList = JSON.parse(localStorage.cardList);
+    }
+    if (localStorage.cssMorp) {
+      this.morp = JSON.parse(localStorage.cssMorp);
     }
   },
   watch: {
@@ -43,13 +46,7 @@ body {
   /* Importing a font from google fonts. */
   @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap");
   font-family: "Open Sans", sans-serif;
-  /* Setting the background image to the body of the page. */
-  /* background: url(./assets/milad-fakurian-PGdW_bHDbpI-unsplash.jpg); */
-  background: #131419;
-  background-position: center center;
-  background-size: 100% 100%;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+
   min-height: 100vh;
   /* Centering the content of the page. */
   display: flex;
@@ -62,6 +59,20 @@ body {
   height: 100%;
   widows: 100%;
   position: relative;
+  /* Setting the background image to the body of the page. */
+  background: url(./assets/milad-fakurian-PGdW_bHDbpI-unsplash.jpg);
+  background-position: center center;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  transition: 0.3s ease-in-out;
+
+
+}
+
+.neuCont{
+  background: #131419;
+
 }
 .container {
   top: 13%;
@@ -78,7 +89,7 @@ body {
 
 .card {
   background: #00000008;
-  backdrop-filter: blur(8px) ;
+  backdrop-filter: blur(8px);
   margin: 1.5rem;
   padding: 1.3rem;
   margin-bottom: 1rem;
@@ -90,13 +101,10 @@ body {
   border-top: 3px solid rgba(255, 255, 255, 0.936);
   border-right: 1px solid rgba(255, 255, 255, 0.664);
   border-radius: 30px;
+  transition: 0.3s ease-in-out;
 
   color: white;
 }
-
-
-
-
 
 @media only screen and (max-width: 1232px) {
   .card {
@@ -114,14 +122,13 @@ body {
     align-items: center;
     flex-direction: column;
   }
-  .row{
+  .row {
     margin-top: 3%;
   }
 }
 
 @media only screen and (max-width: 768px) {
-
-  .row{
+  .row {
     margin-top: 30%;
   }
 }
@@ -132,11 +139,13 @@ body {
   position: fixed;
   justify-content: space-between;
   top: 15%;
+  padding: 10px;
   border-radius: 10px;
   border-top: 3px solid #ffffff;
   border-right: 2px solid #ffff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.364);
   border-left: 1px solid rgba(255, 255, 255, 0.364);
+  transition: 0.3s ease-in-out;
 
   z-index: 1;
 }
@@ -145,7 +154,7 @@ body {
   .item {
     position: absolute;
     display: flex;
-    
+
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
@@ -171,14 +180,13 @@ body {
   }
 }
 
-
 .bi-github,
 .bi-linkedin,
 .bi-window,
 .bi-moon {
   transition: 0.5s ease-in-out;
   font-size: 30px;
-  margin:10px 10px 10px 10px;
+  margin: 10px 10px 10px 10px;
   color: #7524ab83;
   text-shadow: 0mm 0mm 1mm rgba(11, 6, 6, 0.478);
   cursor: pointer;
@@ -187,7 +195,7 @@ body {
 .bi-github,
 .bi-linkedin,
 .bi-window,
-.bi-moon:hover{
+.bi-moon:hover {
   backdrop-filter: blur(1rem);
   transition: 0.3s ease-in-out;
   color: #ffffff;
@@ -206,6 +214,8 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   box-shadow: 0mm 0mm 1mm white;
+  transition: 0.3s ease-in-out;
+
 }
 .write i {
   display: flex;
@@ -230,8 +240,4 @@ body {
   transition: 0.3s ease-in-out;
   color: purple;
 }
-
-
-
-
 </style>

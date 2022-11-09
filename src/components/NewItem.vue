@@ -1,37 +1,40 @@
 <template>
   <div>
     <div class="text-area" :class="{ toggle: !isBoard }">
-      <i class="fa-solid fa-x neuMorpFa-x" @click="close"></i>
+      <i class="fa-solid fa-x " :class="{neuMorpFaX:itemMorp}"  @click="close"></i>
       <div>
         <input
           type="text"
-          class="title text-light neuMorpTitle"
+          class="title text-light "
+          :class="{neuMorpTitle:itemMorp}"
+
           v-model="title"
           placeholder="Keyword.. (at least 3 letters)"
           ref="inputFocus"
         />
 
         <textarea
-          class="area text-light neuMorpTextArea"
+          class="area text-light "
+          :class="{neuMorpTextArea:itemMorp}"
           placeholder="What are you think..?"
           v-model="textInput"
         ></textarea>
         <div class="opt">
-          <select class="min neuMorpSelect" v-model="minute">
+          <select class="min " :class="{neuMorpSelect:itemMorp}" v-model="minute">
             <option value="">Min</option>
 
             <option v-for="i in number" :key="i" clas>{{ i }}</option>
           </select>
-          <select class="sec neuMorpSelect"  v-model="second">
+          <select class="sec " :class="{neuMorpSelect:itemMorp}"  v-model="second">
             <option value="">Sec</option>
             <option v-for="i in number" :key="i">{{ i }}</option>
           </select>
         </div>
-        <button class="run neuMorpButton" @click="setText">Go</button>
+        <button class="run " :class="{neuMorpButton:itemMorp}" @click="setText">Go</button>
       </div>
     </div>
 
-    <div class="write neuMorpWrite" :class="{ toggle: isBoard }">
+    <div class="write" :class="[{ toggle: isBoard }, {neuMorpWrite:itemMorp}]">
       <p>{{ text }}</p>
       <i class="bi bi-pen" @click="changeBoard"></i>
     </div>
@@ -40,6 +43,7 @@
 
 <script>
 export default {
+  props:['itemMorp'],
   data() {
     return {
       isBoard: false,
@@ -51,8 +55,10 @@ export default {
       second: 0,
       minute: 0,
       hour: 0,
+      id:null,
     };
   },
+  
   methods: {
     // seconds&minutes loop
     changeBoard() {
@@ -100,8 +106,10 @@ export default {
     // board toogle
     close() {
       this.isBoard = !this.isBoard;
+      console.log(this.itemMorp)
     },
   },
+ 
 };
 </script>
 
@@ -185,6 +193,8 @@ select {
   right: 0;
   width: 400px;
   height: 400px;
+  transition: 0.3s ease-in-out;
+
 
   /* background: rgba(136, 136, 136, 0.093);
   box-shadow: 0mm 0mm 1mm white; */
@@ -235,7 +245,7 @@ select {
   border-radius: 2px;
 }
 
-.neuMorpFa-x {
+.neuMorpFaX {
   border-radius: 2px;
   background: #131419 !important;
   box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.1),
@@ -253,6 +263,7 @@ select {
 .neuMorpTextArea {
   background: #131419 !important;
   border-radius: 50px !important;
+  border: 1px solid #ffffff0a !important;
 
   box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
     5px 5px 15px rgba(0, 0, 0, 0.5) !important;
@@ -265,7 +276,8 @@ select {
 
 .neuMorpTitle {
   background: #131419 !important;
-  border: none !important;
+  border: 1px solid #ffffff0b !important;
+
   box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.05) inset,
     2px 2px 4px rgba(0, 0, 0, 0.5) inset !important;
   outline: none;
@@ -278,7 +290,8 @@ select {
 
 .neuMorpButton {
   background: #131419 !important;
-  border: none !important;
+  border: 1px solid #ffffff0b !important;
+
   box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.05),
     2px 2px 4px rgba(0, 0, 0, 0.5) !important;
   outline: none;
@@ -292,7 +305,7 @@ select {
 
 .neuMorpWrite {
   background: #131419 !important;
-  border: none !important;
+  border: 1px solid #ffffff0b !important;
   box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.05),
     2px 2px 4px rgba(0, 0, 0, 0.5) !important;
   outline: none;
@@ -303,6 +316,8 @@ select {
   box-shadow: -2px -2px 6px rgba(0, 0, 0, 0.8) inset,
     2px 2px 6px rgba(0, 0, 0, 0.5) inset !important;
   color: #333;
+  border: 1px solid #ffffff0a !important;
+
 }
 
 .neuMorpWrite .bi-pen:hover{

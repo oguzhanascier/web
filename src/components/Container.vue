@@ -3,8 +3,9 @@
     <input
       type="text"
       v-model="searchInput"
-      class="search neuMorpSearch"
+      class="search "
       placeholder=" Search Keywords.."
+      :class="{neuMorpSearch: morpToggle}"
     />
 
     <SideBar
@@ -12,7 +13,7 @@
       @rangeC="colorV = $event"
       @rgba="rgbaC = $event"
       @sideBar="isOpen = $event"
-      @morp="morpToggle=$event"
+      @morp="morpToggle = $event"
     ></SideBar>
 
     <div class="container">
@@ -27,12 +28,10 @@
 
           <Card
             :sendItems="item"
-            :timer="timerStart"
             :customBar="isOpen"
             :deleteCard="deleteItem"
             :customCard="customStyle"
             :cardIndex="index"
-            :stopW="stopWatch"
             :moon="morpToggle"
           ></Card>
         </div>
@@ -72,19 +71,17 @@ export default {
       colorV: "30",
       rgbaC: "#00000008",
       isOpen: null,
-      morpToggle:null,
+      morpToggle: null,
     };
   },
   methods: {
     //setting watch
-   
 
-   
     // delete item
     deleteItem(index) {
       this.setData.splice(index, 1);
+      
 
-      console.log(index);
     },
   },
 
@@ -93,7 +90,6 @@ export default {
     filteredPosts() {
       let lowerValue = this.searchInput.toLowerCase();
       return this.$props.setData.filter((item) =>
-
         item.title.toLowerCase().includes(lowerValue)
       );
     },
@@ -125,6 +121,17 @@ export default {
         // height: [this.blurV + "px"],
       };
     },
+  },
+  watch:{
+    morpToggle(value){
+      this.$emit('moon',value)
+
+    }
+  },
+  mounted() {
+    if (localStorage.cssMorp) {
+      this.morpToggle = JSON.parse(localStorage.cssMorp);
+    }
   },
 };
 </script>
@@ -213,7 +220,6 @@ export default {
   border-radius: 10px;
 }
 
-
 .completeTimer {
   color: rgba(128, 0, 128, 0.529);
 }
@@ -240,27 +246,21 @@ export default {
   transition: 0.3s ease-in-out;
 }
 
-.neuMorpSearch{
+.neuMorpSearch {
   background: #131419;
-  border: none;
+  border: 1px solid #ffffff0b !important;
   color: #999;
   border-radius: 50px;
   box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
     5px 5px 15px rgba(0, 0, 0, 0.5);
-
 }
 
-
-.neuMorpSearch:focus{
+.neuMorpSearch:focus {
   box-shadow: -2px -2px 6px rgba(0, 0, 0, 0.8) inset,
     2px 2px 6px rgba(0, 0, 0, 0.5) inset !important;
   color: #333;
 
 }
-
-
-
-
 
 @media only screen and (max-width: 768px) {
   .relative {

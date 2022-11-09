@@ -1,7 +1,7 @@
 <template>
   <section class="sidebar">
-    <div class="item neuMorpItem">
-      <i class="bi bi-window" @click="openClose()"></i>
+    <div :class="{neuMorpItem:morphism}" class="item">
+      <i class="bi bi-window" @click="openClose()" v-if="!morphism"></i>
       <div class="changeMen" v-show="this.open">
         <input
           class="changeGlass blur"
@@ -49,20 +49,28 @@ export default {
       morphism:false
     };
   },
+
   methods: {
     //sidebar toogle
     openClose() {
       this.open = !this.open;
       this.$emit("sideBar", this.open);
     },
+    // neu or glass
     morphismToggle(){
       this.morphism=!this.morphism
-
       this.$emit('morp', this.morphism)
 
     }
   },
-  //  blur & color send parent &
+  //  blur & color send parent & morphism
+
+  mounted() {
+    if (localStorage.cssMorp) {
+      this.morphism = JSON.parse(localStorage.cssMorp);
+    }
+  },
+
   watch: {
     blurInput() {
       this.$emit("range", this.blurInput);
@@ -72,6 +80,10 @@ export default {
     },
     rgbaColor(value) {
       this.$emit("rgba", value);
+    },
+
+    morphism(neu) {
+      localStorage.cssMorp = JSON.stringify(neu);
     },
   },
 };
