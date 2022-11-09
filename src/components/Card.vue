@@ -273,6 +273,7 @@ export default {
 
 .neuMorpTrash {
   border-radius: 2px;
+
   background: #131419;
   box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.1),
     2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -280,6 +281,8 @@ export default {
 
 .neuMorpTrash:hover {
   border-radius: 2px;
+  border: 1px solid #ffffff0a !important;
+
   background: #131419;
   color: #ccc;
   box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.5), 1px 1px 3px rgba(0, 0, 0, 0.5);

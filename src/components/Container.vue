@@ -128,7 +128,7 @@ export default {
 
     }
   },
-  mounted() {
+    mounted() {
     if (localStorage.cssMorp) {
       this.morpToggle = JSON.parse(localStorage.cssMorp);
     }

@@ -40,6 +40,7 @@
 
 <script>
 export default {
+
   data() {
     return {
       blurInput: null,
@@ -49,6 +50,9 @@ export default {
       morphism:false
     };
   },
+
+
+ 
 
   methods: {
     //sidebar toogle

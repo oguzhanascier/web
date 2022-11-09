@@ -250,14 +250,18 @@ select {
   background: #131419 !important;
   box-shadow: -2px -2px 4px rgba(255, 255, 255, 0.1),
     2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid #ffffff0b !important;
+
 }
 
-.neuMorpFa-x:hover {
+.neuMorpFaX:hover {
   border-radius: 2px;
   background: #131419;
   color: rgb(98, 97, 97);
   box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.5), 1px 1px 3px rgba(0, 0, 0, 0.5);
   transition: all .3s ease-in-out;
+  border: 1px solid #ffffff0b !important;
+
 }
 
 .neuMorpTextArea {
