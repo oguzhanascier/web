@@ -1,3 +1,3 @@
 # site
 
-Not including all code
+Not all code included
